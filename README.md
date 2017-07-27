@@ -1,4 +1,4 @@
-![Alt text](logo.svg)
+![Image](logo.svg)
 
 # Thumb Master
 for pros only
