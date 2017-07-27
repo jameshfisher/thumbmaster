@@ -12,10 +12,14 @@
 
     var pusher = new Pusher('06cca6857d447191ac97', {
       cluster: 'eu',
-      encrypted: true
+      encrypted: true,
+      authEndpoint: 'https://thumbmaster-auth-server.herokuapp.com/pusher/auth'
     });
 
-    var channel = pusher.subscribe('my-channel');
+    var channel = pusher.subscribe('private-my-channel');
+    channel.bind('pusher:subscription_succeeded', (data) => {
+      console.log("SUCCEEDED");
+    });
     channel.bind('connection-event', function(data) {
       alert(data.message);
     });
