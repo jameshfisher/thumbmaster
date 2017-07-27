@@ -61,3 +61,7 @@ function join(offer) {
     .then((answerDesc) => peerConn.setLocalDescription(answerDesc))
     .catch((err) => console.warn("Couldn't create answer"));
 }
+
+function buttonPress() {
+    alert("THUMB ALERT");
+}

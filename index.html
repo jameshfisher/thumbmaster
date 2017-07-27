@@ -3,28 +3,31 @@
   <head>
     <meta charset="utf-8"/>
     <title>WebRTC chat</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('06cca6857d447191ac97', {
+      cluster: 'eu',
+      encrypted: true,
+      authEndpoint: 'https://thumbmaster-auth-server.herokuapp.com/pusher/auth'
+    });
+
+    var channel = pusher.subscribe('private-my-channel');
+    channel.bind('pusher:subscription_succeeded', (data) => {
+      console.log("SUCCEEDED");
+    });
+    channel.bind('connection-event', function(data) {
+      alert(data.message);
+    });
+    </script>
+    <script src="main.js"></script>
   </head>
   <body>
     <h1>Open the JS console!</h1>
-    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-    <script>
-      // Enable pusher logging - don't include this in production
-      Pusher.logToConsole = true;
 
-      var pusher = new Pusher('06cca6857d447191ac97', {
-        cluster: 'eu',
-        encrypted: true,
-        authEndpoint: 'https://thumbmaster-auth-server.herokuapp.com/pusher/auth'
-      });
-
-      var channel = pusher.subscribe('private-my-channel');
-      channel.bind('pusher:subscription_succeeded', (data) => {
-        console.log("SUCCEEDED");
-      });
-      channel.bind('my-event', function(data) {
-        alert(data.message);
-      });
-    </script>
-    <script src="main.js"></script>
+    <button type="button" onclick="buttonPress()">Thumb Master!!!</button>
   </body>
 </html>
