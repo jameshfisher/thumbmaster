@@ -1,14 +1,23 @@
 var RTCPeerConnection = window.RTCPeerConnection || webkitRTCPeerConnection || mozRTCPeerConnection;
-var peerConn = new RTCPeerConnection({'iceServers': [{'urls': ['stun:stun.l.google.com:19302']}]});
+var peerConn = new RTCPeerConnection({
+  'iceServers': [{
+    'urls': ['stun:stun.l.google.com:19302']
+  }]
+});
 console.log('Call create(), or join("some offer")');
+
 function create() {
   console.log("Creating ...");
   var dataChannel = peerConn.createDataChannel('test');
   dataChannel.onopen = (e) => {
-    window.say = (msg) => { dataChannel.send(msg); };
+    window.say = (msg) => {
+      dataChannel.send(msg);
+    };
     console.log('Say things with say("hi")');
   };
-  dataChannel.onmessage = (e) => { console.log('Got message:', e.data); };
+  dataChannel.onmessage = (e) => {
+    console.log('Got message:', e.data);
+  };
   peerConn.createOffer({})
     .then((desc) => peerConn.setLocalDescription(desc))
     .then(() => {})
@@ -30,10 +39,14 @@ function join(offer) {
   peerConn.ondatachannel = (e) => {
     var dataChannel = e.channel;
     dataChannel.onopen = (e) => {
-      window.say = (msg) => { dataChannel.send(msg); };
+      window.say = (msg) => {
+        dataChannel.send(msg);
+      };
       console.log('Say things with say("hi")');
     };
-    dataChannel.onmessage = (e) => { console.log('Got message:', e.data); }
+    dataChannel.onmessage = (e) => {
+      console.log('Got message:', e.data);
+    }
   };
 
   peerConn.onicecandidate = (e) => {
